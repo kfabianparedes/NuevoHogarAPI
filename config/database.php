@@ -5,10 +5,10 @@
     class Database{
     
         //Database credentials
-        private $host = "212.1.208.51";
-        private $db_name = "u741735946_nuevo_hogar";
-        private $username = "u741735946_newhome";
-        private $password = "010199Kf_";
+        private $host ="212.1.208.51"; // "212.1.208.51";
+        private $db_name ="u741735946_capacitacion"; // "u741735946_capacitacion";
+        private $username ="u741735946_team"; // "u741735946_team";
+        private $password ="Team123_"; // "Team123_";
         public $conn;
 
         //Constructor
