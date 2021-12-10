@@ -15,7 +15,7 @@
             $this->conn = $db;
         }
         //FUNCION PARA LISTAR ANUNCIOS ALBERGUES
-        function listarAnunciosAlbergues(&$mensaje, &$exito, &$code_error){
+        function listarAnunciosAlbergue(&$mensaje, &$exito, &$code_error){
             
             $query="
             select AN.ANUN_AL_DESCRIPCION, AN.ANUN_AL_DIRECCION, AN.ANUN_AL_TELEFONO, 

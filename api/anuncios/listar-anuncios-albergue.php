@@ -5,7 +5,8 @@
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-    include_once '../../clases/Anuncios.php';
+    //include_once '../../clases/Anuncios.php';
+    include_once '../../clases/AnuncioAlbergue.php';
     include_once '../../config/database.php';
 
 
@@ -15,14 +16,14 @@
     
     $database = new Database();
     $db = $database->getConnection();
-    $anuncio= new Anuncios($db);
+    $anuncio= new AnuncioAlbergue($db);
 
     $mensaje = '';
     $exito = false;
     $code_error = null;
     $anuncios = [];
 
-    $anuncios = $anuncio->listarAnunciosAlbergues($mensaje, $exito, $code_error);  
+    $anuncios = $anuncio->listarAnunciosAlbergue($mensaje, $exito, $code_error);  
     if($exito){
         header('HTTP/1.1 200 OK');
         echo json_encode( array("error"=>$code_error, "resultado"=>$anuncios, "mensaje"=>$mensaje,"exito"=>true));
