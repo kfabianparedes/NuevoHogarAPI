@@ -26,7 +26,7 @@
     if(esValido($mensaje,$datos)){
     
         $usuario= new Usuarios($db);
-
+        
         $usuario->USU_EMAIL = $datos->USU_EMAIL;
         $usuario->USU_PASSWORD = $datos->USU_PASSWORD; 
         $usuario->USU_NOMBRES = $datos->USU_NOMBRES;

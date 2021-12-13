@@ -22,27 +22,25 @@
     $code_error = null;
 
     $datos = json_decode(file_get_contents("php://input"));
-    
+
     if(esValido($mensaje,$datos)){
     
         $usuario= new Usuarios($db);
 
         $usuario->USU_EMAIL = $datos->USU_EMAIL;
         $usuario->USU_PASSWORD = $datos->USU_PASSWORD; 
-        $usuario->USU_NOMBRES = $datos->USU_NOMBRES;
-        $usuario->USU_TELEFONO = $datos->USU_TELEFONO;
-        $usuario->USU_DIRECCION = $datos->USU_DIRECCION; 
-        $usuario->ROL_ID = $datos->ROL_ID;
+
+        $exito = $usuario->login($mensaje,$code_error);
+        if($exito == true){
+            header('HTTP/1.1 200 OK');
             
-        $exito = $usuario->registrar($mensaje, $code_error);  
-        if($exito == true)
-                header('HTTP/1.1 200 OK');
-        else{
+            $valor=array("NOMBRES"=>$usuario->USU_NOMBRES,"APELLIDOS"=>$usuario->USU_APELLIDOS,"ROL"=>$usuario->ROL_ID);
+
+            echo json_encode( array("error"=>$code_error,"mensaje"=>$mensaje,"exito"=>$exito,"resultado"=>$valor));
+        }else{
             header('HTTP/1.1 400 Bad Request');
+            echo json_encode( array("error"=>$code_error,"mensaje"=>$mensaje,"exito"=>$exito));
         }
-
-        echo json_encode( array("error"=>$code_error,"mensaje"=>$mensaje,"exito"=>$exito));
-
     }else{
 
         $code_error = "error_deCampo";
@@ -52,12 +50,12 @@
     }
 
     function esValido(&$m,$d){
-        echo strlen($d->USU_EMAIL);
+        //echo strlen($d->USU_EMAIL);
         if(!isset($d)){
             $m = "Los datos ingresados deben respetar el formato json";
             return false;
-        }else{
-
+        }
+        else{
             if(!isset($d->USU_EMAIL)){
                 $m = "El campo USU_EMAIL no ha sido enviado";
                 return false;
@@ -82,7 +80,7 @@
                 $m = "La variable USU_PASSWORD no ha sido enviada.";
                 return false;
             }else{  
-                if( strlen($d->USU_PASSWORDL) <= 0){
+                if( strlen($d->USU_PASSWORD) <= 0){
                     $m = "La variable USU_PASSWORD no puede estar vacía o ser null.";
                     return false; 
                 }else{
@@ -96,6 +94,49 @@
         }
 
         return true; 
+    }
+
+    function validarLogin(&$m,$d){
+        echo strlen($d->USU_EMAIL);
+        if(!isset($d)){
+            $m = "Los datos ingresados deben respetar el formato json";
+            return false;
+        }else{
+            if(!isset($d->USU_EMAIL)){
+                $m = "El campo USU_EMAIL no ha sido enviado";
+                return false;
+            }else{
+                if( strlen($d->USU_EMAIL) <= 0){
+                    $m = "La variable USU_EMAIL no debe estar vacía.";
+                    return false;
+                }else{
+                    if(obtenerCantidadDeCaracteres($d->USU_EMAIL)>50){
+                        $m = "La variable USU_EMAIL no debe exceder los 50 caracteres.";
+                        return false;
+                    }else{
+                        if(!filter_var($d->USU_EMAIL, FILTER_VALIDATE_EMAIL)){
+                            $m = "La variable USU_EMAIL no tiene un formato valido.";
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            if(!isset($d->USU_PASSWORD)){
+                $m = "La variable USU_PASSWORD no ha sido enviada.";
+                return false;
+            }else{  
+                if( strlen($d->USU_PASSWORD) <= 0){
+                    $m = "La variable USU_PASSWORD no puede estar vacía o ser null.";
+                    return false; 
+                }else{
+                    if(obtenerCantidadDeCaracteres($d->USU_PASSWORD)<8 || obtenerCantidadDeCaracteres($d->USU_PASSWORD)>20){
+                        $m = "La variable USU_PASSWORD no puede ser menor a 8 ni mayor a 20 caracteres.";
+                        return false; 
+                    }
+                }
+            }
+        }
     }
 
 ?>
