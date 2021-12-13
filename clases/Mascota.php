@@ -15,7 +15,7 @@
             $this->conn = $db;
         }
 
-        function registarMascota(&$mensaje,&$code_error){
+        function registrarMascota(&$mensaje,&$code_error){
             
             $query = "CALL SP_REGISTRAR_MASCOTA(?,?,?,?)"; 
 
