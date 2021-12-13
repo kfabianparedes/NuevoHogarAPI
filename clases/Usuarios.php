@@ -107,9 +107,9 @@
                     $result1 = get_result($stmt);
 
                     if(count($result1 ) > 0 ){
-                        $hash = password_hash($this->USU_PASSWORD,PASSWORD_DEFAULT);
+                        // $hash = password_hash($this->USU_PASSWORD,PASSWORD_DEFAULT);
                         $stmt = $this->conn->prepare($query);
-                        $stmt->bind_param("ssssss",$this->USU_EMAIL,$hash,$this->USU_NOMBRES,
+                        $stmt->bind_param("ssssss",$this->USU_EMAIL,$this->USU_PASSWORD,$this->USU_NOMBRES,
                         $this->USU_TELEFONO,$this->USU_DIRECCION,$this->ROL_ID);
                         //verificamos que se haya realizado correctamente el ingreso de la compra
                         if(!$stmt->execute()){
