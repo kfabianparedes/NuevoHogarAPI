@@ -121,15 +121,10 @@ function esValido(&$m,$d){
             $m = "El campo VET_FOTO no ha sido enviado";
             return false;
         }else{
-            if( strlen($d->ANUN_VET_FOTO) <= 0){
-                $m = "La variable ANUN_VET_FOTO no debe estar vacía.";
-                return false;
-            }else{
                 if(obtenerCantidadDeCaracteres($d->ANUN_VET_FOTO)>500){
                     $m = "La variable ANUN_VET_FOTO no debe exceder los 500 caracteres.";
                     return false;
                 }
-            }
         }           
     }
 
