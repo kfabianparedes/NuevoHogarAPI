@@ -63,8 +63,8 @@
                     $m = "El campo USU_ID debe ser numérico.";
                     return false;
                 }else{
-                    if($d->USU_ID < 1 || $d->USU_ID > 3){
-                        $m = "El valor de USU_ID no debe ser menor que 1 o mayor que 3.";
+                    if($d->USU_ID ==""){
+                        $m = "El campo USU_ID no puede estar vacío.";
                         return false;
                     }
                 }
