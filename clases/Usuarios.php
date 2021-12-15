@@ -11,6 +11,7 @@
         public $USU_APELLIDOS;
         public $USU_TELEFONO;
         public $USU_DIRECCION; 
+        public $USU_FECHA_NACIMIENTO; 
         public $ROL_ID;
 
         public function __construct($db){
@@ -90,8 +91,8 @@
             $queryValidarEmail = "SELECT * FROM USUARIOS WHERE USU_EMAIL  = ? ";
             $queryValidarRol = "SELECT * FROM ROLES WHERE ROL_ID = ? ";
             $query = "
-            INSERT INTO USUARIOS(USU_EMAIL,USU_PASSWORD,USU_NOMBRES,USU_TELEFONO,USU_DIRECCION,ROL_ID)
-            VALUES(?,?,?,?,?,?);
+            INSERT INTO USUARIOS(USU_EMAIL,USU_PASSWORD,USU_NOMBRES,USU_APELLIDOS,USU_TELEFONO,USU_DIRECCION,USU_FECHA_NACIMIENTO,ROL_ID)
+            VALUES(?,?,?,?,?,?,?,?);
             "; 
 
             try{
@@ -110,8 +111,8 @@
                     if(count($result1 ) > 0 ){
                         // $hash = password_hash($this->USU_PASSWORD,PASSWORD_DEFAULT);
                         $stmt = $this->conn->prepare($query);
-                        $stmt->bind_param("ssssss",$this->USU_EMAIL,$this->USU_PASSWORD,$this->USU_NOMBRES,
-                        $this->USU_TELEFONO,$this->USU_DIRECCION,$this->ROL_ID);
+                        $stmt->bind_param("ssssssss",$this->USU_EMAIL,$this->USU_PASSWORD,$this->USU_NOMBRES,$this->USU_APELLIDOS,
+                        $this->USU_TELEFONO,$this->USU_DIRECCION,$this->USU_FECHA_NACIMIENTO,$this->ROL_ID);
                         //verificamos que se haya realizado correctamente el ingreso de la compra
                         if(!$stmt->execute()){
 
