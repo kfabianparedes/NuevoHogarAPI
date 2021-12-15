@@ -214,7 +214,46 @@
             }
         }
 
+        function obtenerUsuarioPorID(&$mensaje, &$code_error){
+            $queryObtenerUsuario = "SELECT * FROM USUARIOS WHERE USU_ID = ?";
 
+            try{
+                
+                $stmt = $this->conn->prepare($queryObtenerUsuario);
+                $stmt->bind_param("s",$this->USU_ID);
+                $stmt->execute();
+                $resultadoID = get_result($stmt);
+
+                
+                if(count($resultadoID)>0){
+
+                    $USU=array_shift($resultadoID);
+                    
+                    $this->USU_NOMBRES=$USU['USU_NOMBRES'];
+                    $this->USU_APELLIDOS=$USU['USU_APELLIDOS'];
+                    $this->ROL_ID=$USU['ROL_ID'];
+                    $this->USU_EMAIL= $USU['USU_EMAIL'];
+                    $this->USU_PASSWORD= $USU['USU_PASSWORD'];
+                    $this->USU_TELEFONO= $USU['USU_TELEFONO'];
+                    $this->USU_DIRECCION= $USU['USU_DIRECCION'];
+                    $this->USU_FECHA_NACIMIENTO= $USU['USU_FECHA_NACIMIENTO'];
+                    //echo json_encode(array("NOMBRE"=>$this->USU_NOMBRES,"APELLIDO"=>$this->USU_APELLIDOS,"ROL_ID"=>$this->ROL_ID));
+
+                    $mensaje="exito";
+                    $code_error=null;
+                    return true;
+                    
+                }else{
+                    $mensaje="DATOS INCORRECTOS";
+                    $code_error="error_valores no validos";
+                    return false;  
+                }
+            } catch(Throwable  $e){
+                $code_error = "error_deBD";
+                $mensaje = "Ha ocurrido un error con la BD. No se pudo ejecutar la consulta.";  
+                return false;     
+            }
+        }
     }
 
 ?>
