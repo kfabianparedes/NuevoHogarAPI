@@ -7,13 +7,12 @@
 
     include_once '../../clases/AnuncioVeterinaria.php';
     include_once '../../config/database.php';
-    include_once '../../util/validaciones.php';
-    
 
 
     if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
         return;
     }
+    
     $database = new Database();
     $db = $database->getConnection();
 
@@ -51,113 +50,9 @@
 
         
     }
+    function esValido(&$m,$d){
 
-
-
-function esValido(&$m,$d){
-        //echo strlen($d->USU_EMAIL);
-    if(!isset($d)){
-        $m = "Los datos ingresados deben respetar el formato json";
-        return false;
-    }else{
-
-        if(!isset($d->ANUN_VET_DESCRIPCION)){
-            $m = "El campo VET_DESCRIPCION no ha sido enviado";
-            return false;
-        }else{
-            if( strlen($d->ANUN_VET_DESCRIPCION) <= 0){
-                $m = "La variable ANUN_VET_DESCRIPCION no debe estar vacía.";
-                return false;
-            }else{
-                if(obtenerCantidadDeCaracteres($d->ANUN_VET_DESCRIPCION)>200){
-                    $m = "La variable ANUN_VET_DESCRIPCION no debe exceder los 200 caracteres.";
-                    return false;
-                }
-            }
-        }
-    }
-            
-    if(!isset($d)){
-        $m = "Los datos ingresados deben respetar el formato json";
-        return false;
-    }else{
-        if(!isset($d->ANUN_VET_DIRECCION)){
-            $m = "El campo VET_DIRECCION no ha sido enviado";
-            return false;
-        }else{
-            if( strlen($d->ANUN_VET_DIRECCION) <= 0){
-                $m = "La variable ANUN_VET_DIRECCION no debe estar vacía.";
-                return false;
-            }else{
-                if(obtenerCantidadDeCaracteres($d->ANUN_VET_DIRECCION)>100){
-                    $m = "La variable ANUN_VET_DIRECCION no debe exceder los 100 caracteres.";
-                    return false;
-                }
-            }
-        }           
-    }
-            
-    
-    if(!isset($d)){
-        $m = "Los datos ingresados deben respetar el formato json";
-        return false;
-    }else{
-        if(!isset($d->ANUN_VET_FECHA)){
-            $m = "El campo VET_FECHA no ha sido enviado";
-            return false;
-        }else{
-            if( strlen($d->ANUN_VET_FECHA) <= 0){
-                $m = "La variable ANUN_VET_FECHA no debe estar vacía.";
-                return false;
-            }
-        }           
+        return true; 
     }
 
-    if(!isset($d)){
-        $m = "Los datos ingresados deben respetar el formato json";
-        return false;
-    }else{
-        if(!isset($d->ANUN_VET_FOTO)){
-            $m = "El campo VET_FOTO no ha sido enviado";
-            return false;
-        }else{
-            if( strlen($d->ANUN_VET_FOTO) <= 0){
-                $m = "La variable ANUN_VET_FOTO no debe estar vacía.";
-                return false;
-            }else{
-                if(obtenerCantidadDeCaracteres($d->ANUN_VET_FOTO)>500){
-                    $m = "La variable ANUN_VET_FOTO no debe exceder los 500 caracteres.";
-                    return false;
-                }
-            }
-        }           
-    }
-
-    if(!isset($d)){
-        $m = "Los datos ingresados deben respetar el formato json";
-        return false;
-    }else{
-        if(!isset($d->USU_ID)){
-            $m = "El campo USU_ID no ha sido enviado";
-            return false;
-        }else{
-            if( strlen($d->USU_ID) <= 0){
-                $m = "La variable USU_ID no debe estar vacía.";
-                return false;
-            }else{
-                if(is_numeric($d->USU_ID)==false){
-                    $m = "El usu ID Tiene que ser un numero";
-                    return false;
-                }
-                else{
-                    if( $d->USU_ID<= 0){
-                        $m = "La variable USU_ID no puede ser 0 por que no existe un usuario 0";
-                        return false;
-                    }
-                }               
-            }           
-        }    
-                return true; 
-    }
-}
 ?>
