@@ -121,7 +121,7 @@
                 $m = "El campo MASCOTA_FOTO no ha sido enviado";
                 return false;
             }
-           
+            
         }
 
         return true;
