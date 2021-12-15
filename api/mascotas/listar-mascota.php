@@ -1,11 +1,11 @@
 <?php
-    header('Access-Control-Allow-Origin: *'); //Change
+    header('Access-Control-Allow-Origin: *'); 
     header("Content-Type: application/json; charset=UTF-8");
     header("Access-Control-Allow-Methods: GET");
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-    include_once '../../clases/AnunciosVeterinaria.php';
+    include_once '../../clases/Mascota.php';
     include_once '../../config/database.php';
 
 
@@ -15,20 +15,19 @@
     
     $database = new Database();
     $db = $database->getConnection();
-    $anuncio= new AnunciosVeterinaria($db);
+    $mascota= new Mascota($db);
 
     $mensaje = '';
     $exito = false;
     $code_error = null;
-    $anuncios = [];
+    $mascotas = [];
 
-    $anuncios = $anuncio->listarAnunciosVeterinarias($mensaje, $exito, $code_error);  
+    $mascotas= $mascota->obtenerMascotas($mensaje, $exito, $code_error);
     if($exito){
         header('HTTP/1.1 200 OK');
-        echo json_encode( array("error"=>$code_error, "resultado"=>$anuncios, "mensaje"=>$mensaje,"exito"=>true));
+        echo json_encode( array("error"=>$code_error, "resultado"=>$mascotas, "mensaje"=>$mensaje,"exito"=>true));
     }else{
         header('HTTP/1.1 400 Bad Request');
-        echo json_encode( array("error"=>$code_error, "resultado"=>$anuncios, "mensaje"=>$mensaje,"exito"=>false));
+        echo json_encode( array("error"=>$code_error, "resultado"=>$mascotas, "mensaje"=>$mensaje,"exito"=>false));
     }
-
 ?>

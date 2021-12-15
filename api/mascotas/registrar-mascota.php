@@ -35,6 +35,8 @@
 
         $exito = $mascotaC->registrarMascota($mensaje,$code_error);
 
+        
+
         if($exito == true)
                 header('HTTP/1.1 200 OK');
         else{
@@ -59,7 +61,67 @@
             return false;
 
         }else{
+            if(!isset($d->MASCOTA_NOMBRE)){
+                $m = "El campo MASCOTA_NOMBRE no ha sido enviado";
+                return false;
+            }else{
+                if($d->MASCOTA_NOMBRE==""){  
+                    $m = "La variable MASCOTA_NOMBRE no puede ser null o vacía";
+                    return false;  
+                }else if(obtenerCantidadDeCaracteres($d->MASCOTA_NOMBRE)>30){
+                    $m = "La variable MASCOTA_NOMBRE supera los 30 caracteres permitidos.";
+                    return false;
 
+                }else if(is_numeric($d->MASCOTA_NOMBRE)){
+                    $m = "La variable MASCOTA_NOMBRE no acepta caracteres numéricos.";
+                    return false;
+                }
+                
+            }
+
+            if(!isset($d->MASCOTA_COLOR)){
+                $m = "El campo MASCOTA_COLOR no ha sido enviado";
+                return false;
+            }else{
+                if($d->MASCOTA_COLOR==""){  
+                    $m = "La variable MASCOTA_COLOR no puede ser null o vacía";
+                    return false;  
+
+                }else if(obtenerCantidadDeCaracteres($d->MASCOTA_COLOR)>20){
+                    $m = "La variable MASCOTA_COLOR supera los 20 caracteres permitidos.";
+                    return false;
+
+                }else if(is_numeric($d->MASCOTA_COLOR)){
+                    $m = "La variable MASCOTA_COLOR no acepta caracteres numéricos.";
+                    return false;
+                }
+                
+            }
+
+            if(!isset($d->MASCOTA_SEXO)){
+                $m = "El campo MASCOTA_SEXO no ha sido enviado";
+                return false;
+            }else{
+                if($d->MASCOTA_SEXO==""){  
+                    $m = "La variable MASCOTA_SEXO no puede ser null o vacía";
+                    return false;  
+
+                }else if(obtenerCantidadDeCaracteres($d->MASCOTA_SEXO)>20){
+                    $m = "La variable MASCOTA_SEXO supera los 20 caracteres permitidos.";
+                    return false;
+
+                }else if(is_numeric($d->MASCOTA_SEXO)){
+                    $m = "La variable MASCOTA_SEXO no acepta caracteres numéricos.";
+                    return false;
+                }
+                
+            }
+
+            if(!isset($d->MASCOTA_FOTO)){
+                $m = "El campo MASCOTA_FOTO no ha sido enviado";
+                return false;
+            }
+            
         }
 
         return true;

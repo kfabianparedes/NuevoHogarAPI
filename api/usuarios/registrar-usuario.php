@@ -30,8 +30,10 @@
         $usuario->USU_EMAIL = $datos->USU_EMAIL;
         $usuario->USU_PASSWORD = $datos->USU_PASSWORD; 
         $usuario->USU_NOMBRES = $datos->USU_NOMBRES;
+        $usuario->USU_APELLIDOS=$datos->USU_APELLIDOS;
         $usuario->USU_TELEFONO = $datos->USU_TELEFONO;
-        $usuario->USU_DIRECCION = $datos->USU_DIRECCION; 
+        $usuario->USU_DIRECCION = $datos->USU_DIRECCION;
+        $usuario->USU_FECHA_NACIMIENTO = $datos->USU_FECHA_NACIMIENTO;
         $usuario->ROL_ID = $datos->ROL_ID;
             
         $exito = $usuario->registrar($mensaje, $code_error);  
@@ -105,6 +107,7 @@
                             return false;
                         }
                     }
+
                 }
             }
 
@@ -122,6 +125,25 @@
                     }
                     else if(obtenerCantidadDeCaracteres($d->USU_NOMBRES)>45){
                         $m = "La variable USU_NOMBRES no puede ser mayor a 45 caracteres.";
+                        return false; 
+                    }
+                }
+            }
+
+            if(!isset($d->USU_APELLIDOS)){
+                $m = "La variable USU_APELLIDOS no ha sido enviada.";
+                return false;
+            }else{  
+                if($d->USU_APELLIDOS == ""){
+                    $m = "La variable USU_APELLIDOS no puede estar vacía o ser null.";
+                    return false; 
+                }else{
+                    if(!esTextoAlfabetico(trim($d->USU_APELLIDOS))){
+                        $m = "La variable USU_APELLIDOS debe ser alfabético.";
+                        return false;
+                    }
+                    else if(obtenerCantidadDeCaracteres($d->USU_APELLIDOS)>45){
+                        $m = "La variable USU_APELLIDOS no puede ser mayor a 45 caracteres.";
                         return false; 
                     }
                 }
@@ -162,7 +184,24 @@
                     }
                 }
             }
+/*
+<!--validar fecha de nacimiento-->
 
+            if(!isset($d->USU_FECHA_NACIMIENTO)){
+                $m = "La variable USU_FECHA_NACIMIENTO no ha sido enviada.";
+                return false;
+            }else{  
+                if($d->USU_FECHA_NACIMIENTO == ""){
+                    $m = "La variable USU_FECHA_NACIMIENTO no puede estar vacía o ser null.";
+                    return false; 
+                }else{
+                    if(obtenerCantidadDeCaracteres($d->USU_FECHA_NACIMIENTO)<8 || obtenerCantidadDeCaracteres($d->USU_FECHA_NACIMIENTO)>20){
+                        $m = "La variable USU_FECHA_NACIMIENTO no puede ser menor a 8 ni mayor a 20 caracteres.";
+                        return false; 
+                    }
+                }
+            }
+*/
         }
 
         return true; 
