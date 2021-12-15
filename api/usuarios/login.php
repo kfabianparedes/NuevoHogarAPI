@@ -34,7 +34,7 @@
         if($exito == true){
             header('HTTP/1.1 200 OK');
             
-            $valor=array("NOMBRES"=>$usuario->USU_NOMBRES,"APELLIDOS"=>$usuario->USU_APELLIDOS,"ROL"=>$usuario->ROL_ID,"ID"=>$usuario->USU_ID);
+            $valor=array("NOMBRES"=>$usuario->USU_NOMBRES,"APELLIDOS"=>$usuario->USU_APELLIDOS,"ROL"=>$usuario->ROL_ID);
 
             echo json_encode( array("error"=>$code_error,"mensaje"=>$mensaje,"exito"=>$exito,"resultado"=>$valor));
         }else{

@@ -21,7 +21,7 @@
             $queryValidarEmail = "SELECT USU_EMAIL FROM USUARIOS WHERE USU_EMAIL  = ? ";
             $queryValidarContra = "SELECT USU_PASSWORD FROM USUARIOS WHERE USU_EMAIL = ? ";
             //$queryValidarRol="SELECT * FROM ROLES WHERE ROL_ID = ?";
-            $query="SELECT USU_ID,USU_NOMBRES,USU_APELLIDOS,ROL_ID FROM USUARIOS WHERE USU_EMAIL=? AND USU_PASSWORD=? ";
+            $query="SELECT USU_NOMBRES,USU_APELLIDOS,ROL_ID FROM USUARIOS WHERE USU_EMAIL=? AND USU_PASSWORD=?";
             try{
                 //VALIDO EL QUERY EMAIL
                 $stmt = $this->conn->prepare($queryValidarEmail);
@@ -55,8 +55,6 @@
                             $this->USU_NOMBRES=$USU["USU_NOMBRES"];
                             $this->USU_APELLIDOS=$USU["USU_APELLIDOS"];
                             $this->ROL_ID=$USU["ROL_ID"];
-                            $this->USU_ID=$USU["USU_ID"];
-
                             //echo json_encode(array("NOMBRE"=>$this->USU_NOMBRES,"APELLIDO"=>$this->USU_APELLIDOS,"ROL_ID"=>$this->ROL_ID));
 
                             $mensaje="LOGUEO EXITOSO";
