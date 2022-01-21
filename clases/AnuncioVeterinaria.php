@@ -14,55 +14,51 @@
         public function __construct($db){
             $this->conn = $db;
         }
-        // //FUNCION PARA LISTAR ANUNCIOS ALBERGUES
-        // function listarAnunciosVeterinaria(&$mensaje, &$exito, &$code_error){
+        
+        function listarAnunciosVeterinarias(&$mensaje, &$exito, &$code_error){
             
-        //     $query="
-        //     select AN.ANUN_AL_DESCRIPCION, AN.ANUN_AL_DIRECCION, AN.ANUN_AL_TELEFONO, 
-        //     MASC.MASCOTA_NOMBRE, MASC.MASCOTA_COLOR, MASC.MASCOTA_SEXO, MASC.MASCOTA_FOTO,
-        //     USU.USU_NOMBRES 
-        //     from ANUNCIOS_ALBERGUE AN 
-        //     INNER JOIN USUARIOS USU ON (AN.USU_ID = USU.USU_ID)
-        //     INNER JOIN MASCOTA MASC ON (AN.MASCOTA_ID = MASC.MASCOTA_ID);  
-        //     ";
+            $query="
+            select ANVET.ANUN_VET_DESCRIPCION, ANVET.ANUN_VET_DIRECCION, ANVET.ANUN_VET_FECHA, ANVET.ANUN_VET_FOTO, USU.USU_NOMBRES  FROM ANUNCIOS_VETERINARIA ANVET
+            INNER JOIN USUARIOS USU ON (ANVET.USU_ID = USU.USU_ID);
+            ";
 
-        //     $datos =[];
+            $datos =[];
 
-        //     try {
+            try {
+
+                $stmt = $this->conn->prepare($query);
+                if(!$stmt->execute()){
+
+                    $code_error = "error_ejecucionQuery";
+                    $mensaje = "Hubo un error al listar los anuncios de veterinarias.";
+                    $exito = false; 
+
+                }else{
+
+                    $result = get_result($stmt); 
                 
-        //         $stmt = $this->conn->prepare($query);
-        //         if(!$stmt->execute()){
+                    if (count($result) > 0) {                
+                        while ($dato = array_shift($result)) {    
+                            $datos[] = $dato;
+                        }
+                    }
 
-        //             $code_error = "error_ejecucionQuery";
-        //             $mensaje = "Hubo un error al listar los anuncios de albergues.";
-        //             $exito = false; 
-
-        //         }else{
-
-        //             $result = get_result($stmt); 
-                
-        //             if (count($result) > 0) {                
-        //                 while ($dato = array_shift($result)) {    
-        //                     $datos[] = $dato;
-        //                 }
-        //             }
-
-        //             $mensaje = "Solicitud ejecutada con exito";
-        //             $exito = true;
+                    $mensaje = "Solicitud ejecutada con exito";
+                    $exito = true;
                     
-        //         }
+                }
 
-        //         return $datos;
+                return $datos;
 
-        //     } catch (Throwable $th) {
+            } catch (Throwable $th) {
 
-        //         $code_error = "error_deBD";
-        //         $mensaje = "Ha ocurrido un error con la BD. No se pudo ejecutar la consulta.";
-        //         $exito = false;
-        //         return $datos;
+                $code_error = "error_deBD";
+                $mensaje = "Ha ocurrido un error con la BD. No se pudo ejecutar la consulta.";
+                $exito = false;
+                return $datos;
 
-        //     }
-        // }
+            }
+        }
         //FUNCION PARA CREAR ANUNCIO ALBERGUE
         function crearAnuncioVeterinaria(&$mensaje,&$code_error){
             $query = "
